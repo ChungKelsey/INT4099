@@ -38,7 +38,103 @@
         }
       });
     </script>
+        <button id="audioUnlock" style="
+      position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
+      z-index: 20; padding: 8px 14px; border-radius: 4px; border: none;
+    ">
+      Tap to enable sound
+    </button>
+
+    <script>
+      document.getElementById('audioUnlock').addEventListener('click', function () {
+        // This user gesture "unlocks" audio for the page
+        const sceneEl = document.querySelector('a-scene');
+        if (sceneEl && sceneEl.audioListener && sceneEl.audioListener.context) {
+          const ctx = sceneEl.audioListener.context;
+          if (ctx.state === 'suspended') {
+            ctx.resume();
+          }
+        }
+        this.style.display = 'none';
+      });
+    </script>
+
   </head>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Marker 1
+    const marker1 = document.querySelector('#marker1');
+    const sound1  = document.querySelector('#sound1');
+
+    if (marker1 && sound1) {
+      marker1.addEventListener('markerFound', () => {
+        // Play the sound when the marker is visible
+        if (sound1.components.sound) {
+          sound1.components.sound.playSound();
+        }
+      });
+
+      marker1.addEventListener('markerLost', () => {
+        // Stop the sound when the marker disappears
+        if (sound1.components.sound) {
+          sound1.components.sound.stopSound();
+        }
+      });
+    }
+
+    // Repeat this pattern for marker2
+    
+    const marker2 = document.querySelector('#marker2');
+    const sound2  = document.querySelector('#sound2');
+
+    if (marker2 && sound2) {
+      marker2.addEventListener('markerFound', () => {
+        if (sound2.components.sound) {
+          sound2.components.sound.playSound();
+        }
+      });
+
+      marker2.addEventListener('markerLost', () => {
+        if (sound2.components.sound) {
+          sound2.components.sound.stopSound();
+        }
+      });
+    }
+    // Repeat this pattern for marker3 and marker4
+    const marker3 = document.querySelector('#marker3');
+    const sound3  = document.querySelector('#sound3');
+    if (marker3 && sound3) {
+      marker3.addEventListener('markerFound', () => {
+        if (sound3.components.sound) {
+          sound3.components.sound.playSound();
+        }
+      });
+
+      marker3.addEventListener('markerLost', () => {
+        if (sound3.components.sound) {
+          sound3.components.sound.stopSound();
+        }
+      });
+    }
+    const marker4 = document.querySelector('#marker4');
+    const sound4  = document.querySelector('#sound4');
+    if (marker4 && sound4) {
+      marker4.addEventListener('markerFound', () => {
+        if (sound4.components.sound) {
+          sound4.components.sound.playSound();
+        }
+      });
+
+      marker4.addEventListener('markerLost', () => {
+        if (sound4.components.sound) {
+          sound4.components.sound.stopSound();
+        }
+      });
+    }
+  });
+  </script>
+
 
   <!-- Ask for camera permission -->
   <body>
@@ -66,21 +162,37 @@
       <a-marker type="pattern" url="assets/pattern-1.patt">
         <a-entity gltf-model="#model1" material-fixes position="0 0.01 0" rotation="90 270 90" scale="1 1 1"></a-entity>
       </a-marker>
+        <a-entity
+        id="sound1"
+        sound="src: assets/audio1.mp3; autoplay: false; loop: false">
+      </a-entity>
 
       <!-- Marker 2 -->
       <a-marker type="pattern" url="assets/pattern-2.patt">
         <a-entity gltf-model="#model2" material-fixes position="0 0.01 0" rotation="270 180 180" scale="0.2 0.2 0.2"></a-entity>
       </a-marker>
+        <a-entity
+        id="sound2"
+        sound="src: assets/audio2.mp3; autoplay: false; loop: false">
+      </a-entity>
 
       <!-- Marker 3 -->
       <a-marker type="pattern" url="assets/pattern-3.patt">
         <a-entity gltf-model="#model3" material-fixes position="0 0.01 0" rotation="270 180 180" scale="0.01 0.01 0.01"></a-entity>
       </a-marker>
+        <a-entity
+        id="sound3"
+        sound="src: assets/audio3.mp3; autoplay: false; loop: false">
+      </a-entity>
 
       <!-- Marker 4 -->
       <a-marker type="pattern" url="assets/pattern-4.patt">
         <a-entity gltf-model="#model4" material-fixes position="0 0.01 0" rotation="270 -90 90" scale="0.2 0.2 0.2"></a-entity>
       </a-marker>
+        <a-entity
+        id="sound4"
+        sound="src: assets/audio4.mp3; autoplay: false; loop: false">
+      </a-entity>
 
       <a-entity camera></a-entity>
     </a-scene>
