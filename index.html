@@ -38,43 +38,7 @@
         }
       });
     </script>
-
-    <button id="audioUnlock" style="
-      position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
-      z-index: 20; padding: 8px 14px; border-radius: 4px; border: none;
-    ">
-      Tap to enable sound
-    </button>
-
-    <script>
-      // Unlock/resume WebAudio on a user gesture so sound.playSound() will work later.
-      document.getElementById('audioUnlock').addEventListener('click', function () {
-        const sceneEl = document.querySelector('a-scene');
-
-        // If A-Frame created an audio listener, resume its context
-        if (sceneEl && sceneEl.audioListener && sceneEl.audioListener.context) {
-          const ctx = sceneEl.audioListener.context;
-          if (ctx.state === 'suspended') {
-            ctx.resume().catch(()=>{});
-          }
-        }
-
-        // Also create/resume a generic AudioContext to ensure the browser's "user gesture" is satisfied.
-        try {
-          if (!window.__unlockedAudioCtx) {
-            const Ctx = window.AudioContext || window.webkitAudioContext;
-            window.__unlockedAudioCtx = new Ctx();
-          }
-          if (window.__unlockedAudioCtx.state === 'suspended') {
-            window.__unlockedAudioCtx.resume().catch(()=>{});
-          }
-        } catch (e) {
-          // ignore if not available
-        }
-
-        this.style.display = 'none';
-      });
-    </script>
+    
 
   </head>
 
@@ -105,6 +69,47 @@
   <!-- Ask for camera permission -->
   <body>
     <div class="hint">Allow camera access and show any of your pattern markers</div>
+
+    <button id="audioUnlock" style="
+      position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
+      z-index: 20; padding: 8px 14px; border-radius: 4px; border: none;
+    ">
+      Tap to enable sound
+    </button>
+
+    <script>
+      // Unlock/resume WebAudio on a user gesture so sound.playSound() will work later.
+      (function () {
+        const btn = document.getElementById('audioUnlock');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+          const sceneEl = document.querySelector('a-scene');
+
+          // If A-Frame created an audio listener, resume its context
+          if (sceneEl && sceneEl.audioListener && sceneEl.audioListener.context) {
+            const ctx = sceneEl.audioListener.context;
+            if (ctx.state === 'suspended') {
+              ctx.resume().catch(()=>{});
+            }
+          }
+
+          // Also create/resume a generic AudioContext to ensure the browser's "user gesture" is satisfied.
+          try {
+            if (!window.__unlockedAudioCtx) {
+              const Ctx = window.AudioContext || window.webkitAudioContext;
+              window.__unlockedAudioCtx = new Ctx();
+            }
+            if (window.__unlockedAudioCtx.state === 'suspended') {
+              window.__unlockedAudioCtx.resume().catch(()=>{});
+            }
+          } catch (e) {
+            // ignore if not available
+          }
+
+          this.style.display = 'none';
+        });
+      })();
+    </script>
 
     <a-scene
       vr-mode-ui="enabled: false"
@@ -175,7 +180,7 @@
 
       <!-- Marker 5 -->
       <a-marker id="marker5" type="pattern" url="assets/pattern-5.patt">
-        <a-entity gltf-model="#model5" material-fixes position="0 0.01 0" rotation="0 0 180" scale="0.2 0.2 0.2"></a-entity>
+        <a-entity gltf-model="#model5" material-fixes position="0 0.01 0" rotation="0 0 0" scale="0.2 0.2 0.2"></a-entity>
 
         <a-entity
           id="sound5"
