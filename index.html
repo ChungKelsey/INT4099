@@ -117,11 +117,14 @@
         <a-asset-item id="model2" src="assets/pattern-2.glb"></a-asset-item>
         <a-asset-item id="model3" src="assets/pattern-3.glb"></a-asset-item>
         <a-asset-item id="model4" src="assets/pattern-4.glb"></a-asset-item>
+        <a-asset-item id="model5" src="assets/pattern-5.glb"></a-asset-item>
+        
         <!-- preload audio; A-Frame sound components will use these -->
         <audio id="audio1" src="assets/audio1.mp3"></audio>
         <audio id="audio2" src="assets/audio2.mp3"></audio>
         <audio id="audio3" src="assets/audio3.mp3"></audio>
         <audio id="audio4" src="assets/audio4.mp3"></audio>
+        <audio id="audio5" src="assets/audio5.mp3"></audio>
       </a-assets>
 
       <!-- Global lights (affect all markers/models) -->
@@ -167,6 +170,16 @@
         <a-entity
           id="sound4"
           sound="src: #audio4; autoplay: false; loop: false; positional: false">
+        </a-entity>
+      </a-marker>
+
+      <!-- Marker 5 -->
+      <a-marker id="marker5" type="pattern" url="assets/pattern-5.patt">
+        <a-entity gltf-model="#model5" material-fixes position="0 0.01 0" rotation="0 0 0" scale="0.5 0.5 0.5"></a-entity>
+
+        <a-entity
+          id="sound5"
+          sound="src: #audio5; autoplay: false; loop: false; positional: false">
         </a-entity>
       </a-marker>
 
